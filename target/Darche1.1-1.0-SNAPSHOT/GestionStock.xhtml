@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      class="no-js" lang="">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Gestion du Stock</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="apple-touch-icon" href="apple-touch-icon.png"/>  
+        <h:outputStylesheet name="./assets/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="./assets/css/plugins.css"/>
+        <h:outputStylesheet name="./assets/css/lato-webfont.css"/>
+        <h:outputStylesheet name="./assets/css/magnific-popup.css"/>
+        <!--Theme custom css -->
+        <h:outputStylesheet name="./assets/css/style.css"/>
+        <!--Theme Responsive css-->
+        <h:outputStylesheet name="./assets/css/responsive.css"/>
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+
+        <script src="./assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </h:head>
+
+    <h:body>
+        <h:form id="gestionStock" styleClass="gestionStock">
+            <!-- EN TETE -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#"><img src="resources/assets/images/logoGesparc.png" alt="" /></a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+                        <ul class="nav navbar-nav navbar-right" id="nav" style="min-height: 100px;">
+                            <li ><a href="Acceuil.xhtml">Accueil</a></li>
+                            <li class="active" ><a href="GestionStock.xhtml" style="width: 200px;" >Gestion du Stock </a></li>
+                            <li ><a href="Ventes.xhtml" style="margin-left: 60px; margin-right: 30px;" >Ventes </a></li>
+                            <li ><a href="Creances.xhtml" style="margin-left: 55px; margin-right: 55px;" > Créances </a></li>
+                            <li ><a href="Statistiques.xhtml" style="margin-left: 70px; margin-right: 70px;"> Statistiques</a></li>
+                            <li ><a style="margin-left: 220px;" > <center> <p:commandButton  icon="ui-icon-power"  action="#{connexionMBean.deconnexion()}"  ajax="false" /> </center> </a></li>
+                            <li ><center> <p:outputLabel value="Session ADMINISTRATEUR" style="margin-left: 200px; margin-right: 250px; margin-top: 25px; color: white;" /> </center> </li>
+                           <li >      </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <!-- CORPS -->
+            <p:layout fullPage="true" styleClass="nav navbar-nav navbar-right"  >
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="west" size="600"  styleClass="remiseAZero" >
+                    <p:fieldset id="fieldArticles" styleClass="fieldArticles" legend="ENREGISTREMENT DES ARTICLES">
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />
+                    <table >
+<!--                                <tr>
+                                    <p:outputLabel value="" style="font-size: 30px; color: #999"/>
+                                </tr>-->
+                                <tr>
+                                    <td >
+                                        <h:panelGrid id="grid1" styleClass="grid1" columns="1" cellspacing="10" cellpadding="10">
+                                            <p:outputLabel for="categorie" value="Catégorie "/>
+                                            <p:selectOneListbox id="categorie" value="#{gestionStockMBean.test}" filter="true" 
+                                                                scrollHeight="100" converter="omnifaces.SelectItemsConverter" styleClass="categorie"  style="width: 150px">
+                                                <f:selectItems value="#{gestionStockMBean.listeCategories}" var="cat" itemLabel="#{cat.libelleCategorie}" itemValue="#{cat.idCategorie}"/>
+                                                <!--<p:ajax event="change" process="@(.categorie)"/>-->
+                                            </p:selectOneListbox>
+                                            <p:commandButton style="width:150px;" value="Ajouter" icon="ui-icon-plus" onclick="PF('categorieDlg').show()"/>
+                                            <p:message for="categorie" display="icon"/>
+                                        </h:panelGrid> 
+                                    </td>
+                                  
+                                    <td width="8%">
+                                        <br/>
+                                    </td>
+                                    
+                                    <td >
+                                        <h:panelGrid id="grid2" styleClass="grid2" columns="2" cellspacing="10" cellpadding="10">
+                                            <p:outputLabel for="libelle" value="Désignation  "/>
+                                            <p:inputText id="libelle" style="background: #ffffff"  styleClass="libelle"  value="#{gestionStockMBean.formObjectArticles.libelleArticles}"  />
+                                            <p:message for="libelle" display="icon"/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel for="prix" value="Prix "/>
+                                            <p:inputText id="prix" style="background: #ffffff"  styleClass="prix"  value="#{gestionStockMBean.formObjectArticles.prixArticles}" />
+                                            <p:message for="prix" display="icon"/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel for="quantite" value="Quantité "/>
+                                            <p:inputText id="quantite" style="background: #ffffff"  styleClass="quantite"  value="#{gestionStockMBean.formObjectArticles.quantiteArticle}" />
+                                            <p:message for="quantite" display="icon"/>
+                                        </h:panelGrid> 
+                                    </td>
+
+                                </tr>
+                        </table> 
+                        
+                    <br/>
+                    <br/>
+                    <center>
+                  <h:panelGrid columns="6">
+                      <p:commandButton  style="margin-right: 8px; background: #a94442 ; color: white"   value="Valider" update="@(.classArticle, .fieldArticles)" actionListener="#{gestionStockMBean.enregistrer()}" icon="ui-icon-disk" class="btn btn-primary btn-lg"/>
+                                <br/><br/>
+                                <p:commandButton  style="margin-right: 8px; background: #999; color: white"  update="@(.classArticle, .fieldArticles)" actionListener="#{gestionStockMBean.rafraichir()}" value="Annuler" icon="ui-icon-cancel" class="btn btn-primary btn-lg"/>
+                                <!--<p:outputLabel value="#chargerCarburantMBean.vehicule.immatriculation}"/>-->
+                            </h:panelGrid>
+                        </center>
+                    </p:fieldset>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" >
+                    
+                    <p:dataTable var="f" value="#{gestionStockMBean.listeArticles}" 
+                                 selection="#{gestionStockMBean.selectObject}" rowKey="#{f.idArticles}"
+                                 emptyMessage="Aucun Article" selectionMode="single"
+                                 rows="19" scrollable="false"  paginator="true" paginatorPosition="top" 
+                                 styleClass="classArticle">
+                        <p:ajax event="rowDblselect" update="@(.fieldArticles)" listener="#{gestionStockMBean.rowSelect()}" />
+                        <f:facet name="header">
+                            <h:outputText value="LISTE DES ARTICLES"/>
+                        </f:facet>
+                        <p:column filterBy="#{f.idCategorie.libelleCategorie}" sortBy="#{f.idCategorie.libelleCategorie}">
+                            <f:facet name="header"> <h:outputText value=" Catégorie "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.idCategorie.libelleCategorie}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column filterBy="#{f.libelleArticles}" sortBy="#{f.libelleArticles}" >
+                            <f:facet name="header"> <h:outputText value=" Désignation "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.libelleArticles}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        
+                        <p:column  >
+                            <f:facet name="header"> <h:outputText value=" Prix "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.prixArticles}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column >
+                            <f:facet name="header"> <h:outputText value=" Quantité "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.quantiteArticle}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        
+                    </p:dataTable>
+                        
+                        
+                        
+                </p:layoutUnit>
+            </p:layout>
+        </h:form>
+        
+         <p:dialog widgetVar="categorieDlg" width="400" height="170" closable="true" header="Enrégistrement de catégorie" resizable="false" draggable="true" id="categorieDlg" modal="true">
+            <h:form >
+                <center>
+                   
+                    <p:fieldset styleClass="fieldCategorie">
+                         <p:messages id="messages1" showDetail="true" autoUpdate="true" closable="true"  />
+                            <table >
+                                <tr>
+                                    
+                                    <td align="top" >
+                                        <h:panelGrid id="gridCategorie" columns="3" cellspacing="10" cellpadding="10">
+                                            <p:outputLabel for="designaticonCat" value="Désignation :"/>
+                                            <p:inputText id="designaticonCat"  required="true" style="background: #ffffff" styleClass="designaticonCat"  value="#{gestionStockMBean.formObjectCategories.libelleCategorie}"  />
+                                            <p:message for="designaticonCat" display="icon"/>
+                                            
+                                        </h:panelGrid>  
+                                    </td>
+                                </tr>
+                            </table>
+                        
+                            
+                            <br/>
+                            <br/>
+                            <h:panelGrid columns="6">
+                                <p:commandButton  style="margin-right: 8px; background: #a94442; color: white" update="@(.fieldCategorie, .fieldArticles)"  value="Valider" actionListener="#{gestionStockMBean.enregistrerCat()}" icon="ui-icon-disk" class="btn btn-primary btn-lg"/>
+                                <br/><br/>
+                                <p:commandButton  style="margin-right: 8px; background: #999; color: white"  update="@(.fieldCategorie)" value="Annuler" icon="ui-icon-cancel" class="btn btn-primary btn-lg"/>
+                                <!--<p:outputLabel value="#chargerCarburantMBean.vehicule.immatriculation}"/>-->
+                            </h:panelGrid>
+                        </p:fieldset>
+                    
+                </center>
+            </h:form>
+
+        </p:dialog>
+        
+    </h:body>
+
+</html>

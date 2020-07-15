@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      class="no-js" lang="">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Statistiques</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="apple-touch-icon" href="apple-touch-icon.png"/>  
+        <h:outputStylesheet name="./assets/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="./assets/css/plugins.css"/>
+        <h:outputStylesheet name="./assets/css/lato-webfont.css"/>
+        <h:outputStylesheet name="./assets/css/magnific-popup.css"/>
+        <!--Theme custom css -->
+        <h:outputStylesheet name="./assets/css/style.css"/>
+        <!--Theme Responsive css-->
+        <h:outputStylesheet name="./assets/css/responsive.css"/>
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+
+        <script src="./assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </h:head>
+
+    <h:body>
+        <h:form id="statistique" styleClass="statistique">
+            <!-- EN TETE -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#"><img src="resources/assets/images/logoGesparc.png" alt="" /></a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+                        <ul class="nav navbar-nav navbar-right" id="nav" style="min-height: 100px;">
+                            <li ><a href="Acceuil.xhtml">Accueil</a></li>
+                            <li ><a href="GestionStock.xhtml" style="width: 200px;" >Gestion du Stock </a></li>
+                            <li ><a href="Ventes.xhtml" style="margin-left: 60px; margin-right: 30px;" >Ventes </a></li>
+                            <li ><a href="Creances.xhtml" style="margin-left: 55px; margin-right: 55px;" > Créances </a></li>
+                            <li class="active" ><a href="Statistiques.xhtml" style="margin-left: 70px; margin-right: 70px;"> Statistiques</a></li>
+                            <li ><a style="margin-left: 220px;" > <center> <p:commandButton  icon="ui-icon-power"  action="#{connexionMBean.deconnexion()}"  ajax="false" /> </center> </a></li>
+                            <li ><center> <p:outputLabel value="Session ADMINISTRATEUR" style="margin-left: 200px; margin-right: 250px; margin-top: 25px; color: white;" /> </center> </li>
+                            <li >      </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <!-- CORPS -->
+            <p:layout fullPage="true" styleClass="nav navbar-nav navbar-right"  >
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+
+                </p:layoutUnit>
+               
+                <p:layoutUnit position="west" size="350"  styleClass="remiseAZero" >
+                     <center>
+                    <p:fieldset id="fieldStat" styleClass="fieldStat">
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />
+                        <h:panelGrid id="grid1" styleClass="grid1" columns="3" cellspacing="10" cellpadding="10">
+                            <p:outputLabel for="date" value=" Date :"/>
+                            <p:calendar id="date" style="background: #ffffff" value="#{statistiqueMBean.dateStat}" styleClass="date" autocomplete="off" lang="french" mask="true" pattern="dd/MM/yyyy" showOn="button" >
+                                </p:calendar>
+                                <p:message for="date" display="icon"/>
+                            <p:outputLabel value=""/>
+                            <p:outputLabel value=""/>
+                            <p:outputLabel value=""/>
+                        </h:panelGrid>
+                        <p:commandButton  style="margin-right: 8px; background: #a94442 ; color: white" actionListener="#{statistiqueMBean.etablisementStatistique()}"   value="Valider" update="@(.fieldStat1, .fieldStat2)"  icon="ui-icon-disk" class="btn btn-primary btn-lg"/>
+                    </p:fieldset>
+                          <br/>
+                          <br/>
+                         <p:fieldset id="fieldStat1" styleClass="fieldStat1" legend="Statistique">
+                             <h:panelGrid id="grid2" styleClass="grid2" columns="3" cellspacing="10" cellpadding="10">
+                                <p:outputLabel for="totalVente" value="Total des Ventes "/>
+                                <p:inputText id="totalVente" disabled="true" value="#{statistiqueMBean.totalVente}" style="background: #ffffff"  styleClass="totalVente"/>
+                                <p:message for="totalVente" display="icon"/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel for="totalCreance" value="Total des Créances "/>
+                                <p:inputText id="totalCreance" disabled="true" value="#{statistiqueMBean.totalCreance}" style="background: #ffffff"  styleClass="totalCreance"/>
+                                <p:message for="totalCreance" display="icon"/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel for="totalVenteRecup" value="Total des Ventes perçues "/>
+                                <p:inputText id="totalVenteRecup" disabled="true" value="#{statistiqueMBean.totalVentePercue}" style="background: #ffffff"  styleClass="totalVenteRecup"/>
+                                <p:message for="totalVenteRecup" display="icon"/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel for="totalCreanceRecup" value="Total des Créances perçues "/>
+                                <p:inputText id="totalCreanceRecup" disabled="true" value="#{statistiqueMBean.totalCreancePercue}" style="background: #ffffff"  styleClass="totalCreanceRecup"/>
+                                <p:message for="totalCreanceRecup" display="icon"/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel for="totalCA" value="Chiffre d'Affaire "/>
+                                <p:inputText id="totalCA" disabled="true" value="#{statistiqueMBean.chiffreDAffaire}" style="background: #ffffff"  styleClass="totalCA"/>
+                                <p:message for="totalCA" display="icon"/>
+                            </h:panelGrid>
+                         </p:fieldset>
+                       
+                          </center>                  
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="center" >
+                   
+                    <center>
+                        <p:fieldset id="fieldStat2" styleClass="fieldStat2">
+                            
+                        
+                        <table>
+                            <tr>
+                                <td>
+                                    
+                                    
+                                    <p:dataTable var="f" value="#{statistiqueMBean.listeVenteFiltre}" 
+                                 selection="#{statistiqueMBean.selectObjectVente}" rowKey="#{f.idVentes}"
+                                 emptyMessage="Aucune vente" selectionMode="single"
+                                 rows="19" scrollable="false"  paginator="true" paginatorPosition="top" 
+                                 styleClass="classCreance">
+                        <p:ajax event="rowDblselect" update="@(.fieldListeDetailVente)" listener="#{statistiqueMBean.rowSelect()}" />
+                        <f:facet name="header">
+                            <h:outputText value="LISTE DES VENTES EFFECTUEES"/>
+                        </f:facet>
+                        <p:column >
+                                <f:facet name="header"> <h:outputText value=" Date de Vente "/> </f:facet>
+                                <center>
+                                    <h:outputText value="#{f.dateVente}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET" locale="fr"/>
+                                    </h:outputText>
+                                </center>
+                            </p:column>
+                        <p:column filterBy="#{f.idClients.nomClient}" sortBy="#{f.idClients.nomClient}">
+                            <f:facet name="header"> <h:outputText value=" Nom "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.idClients.nomClient}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column filterBy="#{f.idClients.prenomClient}" sortBy="#{f.idClients.prenomClient}" >
+                            <f:facet name="header"> <h:outputText value=" Prénom "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.idClients.prenomClient}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        
+                        <p:column  >
+                            <f:facet name="header"> <h:outputText value=" Prix Total "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.prixTotal}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column >
+                            <f:facet name="header"> <h:outputText value=" Prix Payé "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.prixPayer}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                         <p:column >
+                            <f:facet name="header"> <h:outputText value=" Reste  "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{statistiqueMBean.reste(f.prixTotal, f.prixPayer)}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        
+                    </p:dataTable>
+                                    
+                                    
+                                    
+                                </td>
+                                
+                                
+                                <td width="2%">
+                                        <br/>
+                                </td>
+                                
+                                
+                                <td>
+                                    
+                                    <p:dataTable var="l" value="#{statistiqueMBean.listeCreanceFiltre}" 
+                                         rowKey="#{l.idCreance}"
+                                 emptyMessage="Aucune créance " 
+                                 rows="5" scrollable="false"  paginator="true" paginatorPosition="top" 
+                                 styleClass="classCreanceDetail">
+                                 <f:facet name="header">
+                            <h:outputText value="LISTE DES CREANCES EFFECTUEES"/>
+                        </f:facet>
+                           <p:column >
+                            <f:facet name="header"> <h:outputText value=" Nom "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{l.idClients.nomClient}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                                        <p:column >
+                            <f:facet name="header"> <h:outputText value=" Prénom "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{l.idClients.prenomClient}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column >
+                                <f:facet name="header"> <h:outputText value=" Date de Vente "/> </f:facet>
+                                <center>
+                                    <h:outputText value="#{l.datePaye}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET" locale="fr"/>
+                                    </h:outputText>
+                                </center>
+                            </p:column>
+                        <p:column >
+                            <f:facet name="header"> <h:outputText value=" Montant Payé "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{l.prixPayer}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                                     
+                             
+                             </p:dataTable>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                          </p:fieldset>
+                    </center> 
+                  
+                </p:layoutUnit>
+            </p:layout>
+        </h:form>
+        
+        <p:dialog widgetVar="detailVenteDlg" width="700" height="500" closable="true" header="LISTE DES ARTICLES ACHETES" draggable="true" id="detailVenteDlg" modal="true">
+             <h:form>
+                  <p:fieldset id="fieldListeDetailVente" styleClass="fieldListeDetailVente">
+                        
+                      <p:dataTable id="tableListeDetailVente" var="lv" value="#{statistiqueMBean.listeDetailsVenteFiltre}" rows="10"
+                                   rowKey="#{lv.idDetailsVentes}"
+                                     selectionMode="single"
+                                     emptyMessage="Aucune article payé"  
+                                     styleClass="tableListeDetailVente" 
+                                       scrollable="false"  paginator="true" paginatorPosition="top" >
+                            
+                            <!--<p:ajax event="rowDblselect" update="@(.fieldDetails)" listener="#venteMBean.annulerUneVente()}" />-->
+                        <p:column >
+                            <f:facet name="header"> <h:outputText value=" Categorie "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{lv.idArticles.idCategorie.libelleCategorie}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column  >
+                            <f:facet name="header"> <h:outputText value=" Désignation "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{lv.idArticles.libelleArticles}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        
+                         <p:column  >
+                            <f:facet name="header"> <h:outputText value=" Quantité  "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{lv.quantitePayer}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column  >
+                            <f:facet name="header"> <h:outputText value=" Prix de Vente "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{lv.prixVendu}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                            <p:column  >
+                            <f:facet name="header"> <h:outputText value=" Prix Normal "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{lv.prixNormal}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                        
+                        
+                    </p:fieldset>
+             </h:form>
+        
+        </p:dialog>
+        
+        
+    </h:body>
+
+</html>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      class="no-js" lang="">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Authentification</title>
+    </h:head>
+
+    <h:body>
+
+        
+ <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />
+        <div id="content" class="center_content">
+            <ui:insert name="content">
+            
+            
+                 <p:dialog  width="350" id="dialog" header="Authentification" resizable="false" modal="true" 
+                   closable="false" visible="true"  widgetVar="dlg"  > 
+            <center>
+                <h:form styleClass="loginForm"  style="background-color: #FFF">   
+                    <p:fieldset id="fieldStat" styleClass="fieldConnexion">
+                        <!--<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />-->
+                    <!--<h:graphicImage value="resources/img/logo-lm.png" width="100" height="100" />-->
+                    <h:panelGrid columnClasses="3" cellpadding="5">  
+                        <h:outputLabel for="loginuser" value="Login" styleClass="label"/>  
+                        <p:inputText id="loginuser" value="#{connexionMBean.login}" required="true" requiredMessage="Entrer le login" style="width: 200px;" placeholder="Nom Utilisateur"/>  
+                        <p:message for="loginuser"/>
+
+                        <h:outputLabel for="password" value="Mot de passe" styleClass="label"/>  
+                        <p:password  id="password" required="true" value="#{connexionMBean.mdp}" feedback="true" inline="true" redisplay="true"
+                                     requiredMessage="Entrer le mot de passe" style="width: 200px;" styleClass="selectmenu" placeholder="Mot de passe" />  
+                        <p:message for="password"/>
+
+                        <f:facet name="footer">  
+                            <center>
+                                <p:commandButton value="Connexion" action="#{connexionMBean.submit()}" icon="ui-icon-check" process="@this @(.loginForm)"/>
+                                <!--<p:commandLink action="faces/pages/rechercheAnomalie?faces-redirect=true" id="loginButton" value="Login" ajax="false"/>-->
+                            </center>
+                        </f:facet>  
+                    </h:panelGrid>  
+                   </p:fieldset>
+                </h:form>  
+            </center>
+        </p:dialog> 
+            
+            
+            
+            
+            </ui:insert>
+        </div>
+
+      
+    </h:body>
+
+</html>

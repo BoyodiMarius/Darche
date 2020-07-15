@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="Darche1.1_PU" transaction-type="JTA">
+    <jta-data-source>darche1.1JNDI</jta-data-source>
+    <class>tg.marcorp.Darche.entities.articles</class>
+    <class>tg.marcorp.Darche.entities.categories</class>
+    <class>tg.marcorp.Darche.entities.clients</class>
+    <class>tg.marcorp.Darche.entities.detailsVente</class>
+    <class>tg.marcorp.Darche.entities.ventes</class>
+    <class>tg.marcorp.Darche.entities.creances</class>
+    <class>tg.marcorp.Darche.entities.utilisateurs</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+    </properties>
+  </persistence-unit>
+</persistence>

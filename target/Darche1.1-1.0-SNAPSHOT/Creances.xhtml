@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      class="no-js" lang="">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Creances</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="apple-touch-icon" href="apple-touch-icon.png"/>  
+        <h:outputStylesheet name="./assets/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="./assets/css/plugins.css"/>
+        <h:outputStylesheet name="./assets/css/lato-webfont.css"/>
+        <h:outputStylesheet name="./assets/css/magnific-popup.css"/>
+        <!--Theme custom css -->
+        <h:outputStylesheet name="./assets/css/style.css"/>
+        <!--Theme Responsive css-->
+        <h:outputStylesheet name="./assets/css/responsive.css"/>
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+
+        <script src="./assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </h:head>
+
+    <h:body>
+        <h:form id="parametre" styleClass="parametre">
+            <!-- EN TETE -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#"><img src="resources/assets/images/logoGesparc.png" alt="" /></a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+                        <ul class="nav navbar-nav navbar-right" id="nav" style="min-height: 100px;">
+                            <li ><a href="Acceuil.xhtml">Accueil</a></li>
+                            <li ><a href="GestionStock.xhtml" style="width: 200px;" >Gestion du Stock </a></li>
+                            <li ><a href="Ventes.xhtml" style="margin-left: 60px; margin-right: 30px;" >Ventes </a></li>
+                            <li class="active" ><a href="Creances.xhtml" style="margin-left: 55px; margin-right: 55px;" > Créances </a></li>
+                            <li ><a href="Statistiques.xhtml" style="margin-left: 70px; margin-right: 70px;"> Statistiques</a></li>
+                            <li ><a style="margin-left: 220px;" > <center> <p:commandButton  icon="ui-icon-power"  action="#{connexionMBean.deconnexion()}"  ajax="false" /> </center> </a></li>
+                            <li ><center> <p:outputLabel value="Session ADMINISTRATEUR" style="margin-left: 200px; margin-right: 250px; margin-top: 25px; color: white;" /> </center> </li>
+                           <li >      </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <!-- CORPS -->
+            <p:layout fullPage="true" styleClass="nav navbar-nav navbar-right"  >
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="west" size="800"  styleClass="remiseAZero" >
+                    
+                    <p:fieldset id="fieldCreanceListe" styleClass="fieldCreanceListe" >
+                        
+                   
+                    <p:dataTable var="f" value="#{creanceMBean.listeVenteFiltre}" 
+                                 selection="#{creanceMBean.selectObjectVente}" rowKey="#{f.idVentes}"
+                                 emptyMessage="Aucune créance" selectionMode="single"
+                                 rows="19" scrollable="false"  paginator="true" paginatorPosition="top" 
+                                 styleClass="classCreance">
+                        <p:ajax event="rowDblselect" update="@(.fieldCreance)" listener="#{creanceMBean.rowSelect()}" />
+                        <f:facet name="header">
+                            <h:outputText value="LISTE DES CREANCES"/>
+                        </f:facet>
+                        <p:column >
+                                <f:facet name="header"> <h:outputText value=" Date de Vente "/> </f:facet>
+                                <center>
+                                    <h:outputText value="#{f.dateVente}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET" locale="fr"/>
+                                    </h:outputText>
+                                </center>
+                            </p:column>
+                        <p:column filterBy="#{f.idClients.nomClient}" sortBy="#{f.idClients.nomClient}">
+                            <f:facet name="header"> <h:outputText value=" Nom "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.idClients.nomClient}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column filterBy="#{f.idClients.prenomClient}" sortBy="#{f.idClients.prenomClient}" >
+                            <f:facet name="header"> <h:outputText value=" Prénom "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.idClients.prenomClient}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        
+                        <p:column  >
+                            <f:facet name="header"> <h:outputText value=" Prix Total "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.prixTotal}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column >
+                            <f:facet name="header"> <h:outputText value=" Prix Payé "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{f.prixPayer}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                         <p:column >
+                            <f:facet name="header"> <h:outputText value=" Reste  "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{creanceMBean.reste(f.prixTotal, f.prixPayer)}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                        
+                    </p:dataTable>
+                   </p:fieldset>
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="center" >
+                   
+                    <center>
+                        <p:fieldset id="fieldCreance" styleClass="fieldCreance" legend="ENREGISTREMENT DES CREANCES">
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h:panelGrid id="grid1" styleClass="grid1" columns="3" cellspacing="10" cellpadding="10">
+                                            <p:outputLabel for="dateVente" value="Date de Vente  "/>
+                                            <p:inputText id="dateVente" disabled="true" style="background: #ffffff"  styleClass="dateVente"  value="#{creanceMBean.dateVente}"  />
+                                            <p:message for="dateVente" display="icon"/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel for="nom" value="Nom "/>
+                                            <p:inputText id="nom" disabled="true" style="background: #ffffff"  styleClass="nom"  value="#{creanceMBean.formObjectVente.idClients.nomClient}" />
+                                            <p:message for="nom" display="icon"/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel for="prenom" value="Prénom "/>
+                                            <p:inputText id="prenom" disabled="true" style="background: #ffffff"  styleClass="prenom"  value="#{creanceMBean.formObjectVente.idClients.prenomClient}" />
+                                            <p:message for="prenom" display="icon"/>
+                                        </h:panelGrid>
+                                    </td>
+                                    <td width="8%">
+                                        <br/>
+                                    </td>
+                                     <td>
+                                        <h:panelGrid id="grid2" styleClass="grid2" columns="3" cellspacing="10" cellpadding="10">
+                                            <p:outputLabel for="prixTotal" value="Prix Total "/>
+                                             <p:inputText id="prixTotal" disabled="true" style="background: #ffffff"  styleClass="prixTotal"  value="#{creanceMBean.formObjectVente.prixTotal}" />
+                                            <p:message for="prixTotal" display="icon"/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                             <p:outputLabel for="prixPaye" value="Prix Payé "/>
+                                             <p:inputText id="prixPaye" disabled="true" style="background: #ffffff"  styleClass="prixPaye"  value="#{creanceMBean.formObjectVente.prixPayer}" />
+                                            <p:message for="prixPaye" display="icon"/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                            <p:outputLabel value=""/>
+                                             <p:outputLabel for="reste" value="Reste "/>
+                                             <p:inputText id="reste" disabled="true" style="background: #ffffff"  styleClass="reste"  value="#{creanceMBean.resteAffiche}" />
+                                            <p:message for="reste" display="icon"/>
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <h:panelGrid id="grid3" styleClass="grid3" columns="3" cellspacing="10" cellpadding="10">
+                                <p:outputLabel for="date" value=" Date :"/>
+                                <p:calendar id="date" style="background: #ffffff" value="#{creanceMBean.formObjectCreance.datePaye}" styleClass="date" autocomplete="off" lang="french" mask="true" pattern="dd/MM/yyyy" showOn="button" >
+                                </p:calendar>
+                                <p:message for="date" display="icon"/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel value=""/>
+                                <p:outputLabel for="prixCreance" value="Montant payé "/>
+                            <p:inputText id="prixCreance" style="background: #ffffff"  styleClass="prixCreance"  value="#{creanceMBean.formObjectCreance.prixPayer}" />
+                            <p:message for="prixCreance" display="icon"/>
+                            </h:panelGrid>
+                            
+                            
+                            <br/>
+                            <h:panelGrid columns="6">
+                                <p:commandButton  style="margin-right: 8px; background: #a94442 ; color: white"   value="Valider" update="@(.classCreanceDetail, .fieldCreance, .fieldCreanceListe)" actionListener="#{creanceMBean.validerCreance()}" icon="ui-icon-disk" class="btn btn-primary btn-lg"/>
+                                <br/><br/>
+                                <p:commandButton  style="margin-right: 8px; background: #999; color: white"  update="@(.classCreanceDetail, .fieldCreance, .fieldCreanceListe)" actionListener="#{creanceMBean.rafraichir()}" value="Annuler" icon="ui-icon-cancel" class="btn btn-primary btn-lg"/>
+                                <!--<p:outputLabel value="#chargerCarburantMBean.vehicule.immatriculation}"/>-->
+                            </h:panelGrid>
+                            
+                            
+                            <br/>
+                            <p:dataTable var="l" value="#{creanceMBean.listeCreanceFiltre}" 
+                                         rowKey="#{l.idCreance}"
+                                 emptyMessage="Aucune créance régler" 
+                                 rows="5" scrollable="false"  paginator="true" paginatorPosition="top" 
+                                 styleClass="classCreanceDetail">
+                                 <f:facet name="header">
+                            <h:outputText value="LISTE DES CREANCES EFFECTUEES"/>
+                        </f:facet>
+                        <p:column >
+                                <f:facet name="header"> <h:outputText value=" Date de Payement "/> </f:facet>
+                                <center>
+                                    <h:outputText value="#{l.datePaye}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET" locale="fr"/>
+                                    </h:outputText>
+                                </center>
+                            </p:column>
+                        <p:column >
+                            <f:facet name="header"> <h:outputText value=" Montant Payé "/> </f:facet>
+                            <center>
+                                <h:outputText value="#{l.prixPayer}"  ></h:outputText>
+                            </center>
+                        </p:column>
+                             
+                             </p:dataTable>
+                            <br/>
+                             <table>
+                            <tr>
+                                <td>
+                                    <p:outputLabel for="creanceTotal" value="Créance Total "/>
+                                    <p:inputText id="creanceTotal" disabled="true" style="background: #ffffff"  styleClass="creanceTotal"  value="#{creanceMBean.creanceTotal}" />
+                                </td>
+                                 <td width="8%">
+                                        <br/>
+                                    </td>
+                                <td>
+                                    <p:outputLabel for="creancePaye" value="Créance Payé "/>
+                                    <p:inputText id="creancePaye" disabled="true" style="background: #ffffff"  styleClass="creancePaye"  value="#{creanceMBean.creancePaye}" />
+                                </td>
+                            </tr>
+                        </table>
+                        </p:fieldset>
+                       
+                                        
+                    </center>      
+                </p:layoutUnit>
+            </p:layout>
+        </h:form>
+    </h:body>
+
+</html>
